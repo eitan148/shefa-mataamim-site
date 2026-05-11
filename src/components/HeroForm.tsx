@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Variant = "strip" | "card" | "light";
+type Variant = "strip" | "rounded";
 
-export default function HeroForm({ variant = "card" }: { variant?: Variant }) {
+export default function HeroForm({ variant = "strip" }: { variant?: Variant }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -21,27 +21,17 @@ export default function HeroForm({ variant = "card" }: { variant?: Variant }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone, source: variant }),
       });
-    } catch {
-      /* server logs */
-    }
+    } catch {/* server logs */}
     router.push("/thank-you");
   }
 
-  const inputClass =
-    variant === "light"
-      ? "flex-1 min-w-0 px-4 py-3 rounded-md border border-white/40 bg-white/10 text-white placeholder-white/70 focus:bg-white focus:text-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-white"
-      : "flex-1 min-w-0 px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7a1f1f] text-base text-[#1c1c1c]";
-
-  const wrapperClass =
-    variant === "strip"
-      ? "w-full"
-      : variant === "light"
-      ? "w-full max-w-2xl mx-auto"
-      : "bg-white rounded-2xl shadow-lg p-5 sm:p-6 w-full max-w-2xl mx-auto";
+  const isRounded = variant === "rounded";
+  const radius = isRounded ? "rounded-full" : "rounded-none";
+  const btnFont = { fontFamily: "Rubik, sans-serif", fontWeight: 700, fontSize: "21px" };
 
   return (
-    <form onSubmit={handleSubmit} className={wrapperClass} aria-label="טופס יצירת קשר מהיר">
-      <div className="flex flex-col sm:flex-row gap-3">
+    <form onSubmit={handleSubmit} className="w-full" aria-label="טופס יצירת קשר מהיר">
+      <div className="flex flex-col sm:flex-row gap-3 items-stretch">
         <input
           type="text"
           name="name"
@@ -49,7 +39,7 @@ export default function HeroForm({ variant = "card" }: { variant?: Variant }) {
           onChange={(e) => setName(e.target.value)}
           placeholder="שם"
           aria-label="שם"
-          className={inputClass}
+          className={`flex-1 min-w-0 bg-white text-black px-4 py-[14px] ${radius} border-0 focus:outline-none focus:ring-2 focus:ring-white/50`}
         />
         <input
           type="tel"
@@ -60,12 +50,13 @@ export default function HeroForm({ variant = "card" }: { variant?: Variant }) {
           required
           inputMode="tel"
           aria-label="טלפון"
-          className={inputClass}
+          className={`flex-1 min-w-0 bg-white text-black px-4 py-[14px] ${radius} border-0 focus:outline-none focus:ring-2 focus:ring-white/50`}
         />
         <button
           type="submit"
           disabled={submitting}
-          className="btn-wa px-7 py-3 rounded-md font-bold text-base shadow-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
+          className={`bg-white text-black px-[30px] py-[15px] ${radius} whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed transition-opacity`}
+          style={btnFont}
         >
           {submitting ? "שולח..." : "שלחו!"}
         </button>

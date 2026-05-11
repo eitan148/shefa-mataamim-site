@@ -14,14 +14,13 @@ export type PostNav = {
   nextHref?: string;
 };
 
-/** Sections 9-11 — post title + body + navigation */
+/** Sections 9-11 — post title (55px Rubik 500), body (Rubik 21px 300), nav */
 export default function PostBody({
   title,
   contentHtml,
   nav,
 }: {
   title?: string;
-  /** If provided, renders the WP REST content HTML. Otherwise renders the homepage's hand-typed intro+TOC+sections. */
   contentHtml?: string;
   nav?: PostNav;
 }) {
@@ -29,29 +28,72 @@ export default function PostBody({
   const navigation = nav || HOMEPAGE_POST_NAV;
 
   return (
-    <article className="bg-white py-12 sm:py-16">
-      <div className="max-w-[860px] mx-auto px-4">
-        {/* Section 9 — post title */}
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1c1c] text-center mb-10 pb-6 border-b border-gray-200">
+    <article className="bg-white">
+      {/* Section 9 — post title — marginTop: 100px in source */}
+      <div className="max-w-[1400px] mx-auto px-4" style={{ marginTop: "100px" }}>
+        <h2
+          style={{
+            fontFamily: "Rubik, sans-serif",
+            fontSize: "55px",
+            fontWeight: 500,
+            lineHeight: "77px",
+            color: "rgb(12, 12, 12)",
+            textAlign: "start",
+            margin: 0,
+          }}
+        >
           {pageTitle}
         </h2>
+      </div>
 
-        {/* Section 10 — post body */}
+      {/* Section 10 — post body — Rubik 300 21px, 938px container */}
+      <div className="max-w-[1140px] mx-auto px-4 mt-6">
         {contentHtml ? (
           <div
-            className="prose-wigig text-[#333] leading-[1.85] text-[16px] sm:text-[17px]"
+            className="prose-wigig"
+            style={{
+              maxWidth: "938px",
+              fontFamily: "Rubik, sans-serif",
+              fontSize: "21px",
+              fontWeight: 300,
+              lineHeight: "31.5px",
+              color: "rgb(12, 12, 12)",
+              textAlign: "start",
+            }}
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         ) : (
-          <div className="text-[#333] leading-[1.85] text-[16px] sm:text-[17px] space-y-5">
-            <p>{HOMEPAGE_POST_BODY_INTRO}</p>
+          <div
+            style={{
+              maxWidth: "938px",
+              fontFamily: "Rubik, sans-serif",
+              fontSize: "21px",
+              fontWeight: 300,
+              lineHeight: "31.5px",
+              color: "rgb(12, 12, 12)",
+              textAlign: "start",
+            }}
+          >
+            <p style={{ margin: "0 0 14.4px" }}>{HOMEPAGE_POST_BODY_INTRO}</p>
 
-            <aside className="bg-gray-50 border border-gray-200 rounded-lg p-5">
-              <h3 className="text-base font-bold text-[#1c1c1c] mb-2">תוכן עניינים</h3>
-              <ol className="space-y-1 text-sm">
+            <aside className="bg-gray-50 border border-gray-200 p-5 my-5">
+              <h4
+                style={{
+                  fontFamily: "Rubik, sans-serif",
+                  fontSize: "18px",
+                  fontWeight: 400,
+                  lineHeight: "21.6px",
+                  color: "#000000",
+                  margin: 0,
+                  textAlign: "start",
+                }}
+              >
+                תוכן עניינים
+              </h4>
+              <ol className="mt-3 space-y-1 text-sm">
                 {HOMEPAGE_POST_TOC.map((t) => (
                   <li key={t.anchor} className={t.num.includes(".") ? "pr-4" : ""}>
-                    <a href={`#${t.anchor}`} className="text-[#7a1f1f] hover:underline">
+                    <a href={`#${t.anchor}`} className="hover:underline" style={{ color: "rgb(12,12,12)" }}>
                       <span className="text-[#999] me-1">{t.num}</span>
                       {t.text}
                     </a>
@@ -61,55 +103,77 @@ export default function PostBody({
             </aside>
 
             {HOMEPAGE_POST_SECTIONS.map((section, i) => (
-              <div key={i} className="space-y-4">
+              <div key={i}>
                 {section.h2 && (
-                  <h2 id={section.anchor} className="text-xl sm:text-2xl font-extrabold text-[#1c1c1c] pt-4">
+                  <h2
+                    id={section.anchor}
+                    style={{
+                      fontFamily: "Rubik, sans-serif",
+                      fontSize: "32px",
+                      fontWeight: 500,
+                      lineHeight: "38.4px",
+                      color: "rgb(12, 12, 12)",
+                      textAlign: "start",
+                      margin: "8px 0 16px",
+                    }}
+                  >
                     {section.h2}
                   </h2>
                 )}
                 {section.h3 && (
-                  <h3 id={section.anchor} className="text-lg sm:text-xl font-bold text-[#1c1c1c] pt-4">
+                  <h3
+                    id={section.anchor}
+                    style={{
+                      fontFamily: "Rubik, sans-serif",
+                      fontSize: "28px",
+                      fontWeight: 500,
+                      lineHeight: "33.6px",
+                      color: "rgb(12, 12, 12)",
+                      textAlign: "start",
+                      margin: "8px 0 16px",
+                    }}
+                  >
                     {section.h3}
                   </h3>
                 )}
                 {section.paragraphs.map((p, pi) => (
-                  <p key={pi}>{p}</p>
+                  <p key={pi} style={{ margin: "0 0 14.4px" }}>
+                    {p}
+                  </p>
                 ))}
               </div>
             ))}
           </div>
         )}
+      </div>
 
-        {/* Section 11 — post nav */}
-        {(navigation.prevHref || navigation.nextHref) && (
-          <nav className="mt-12 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between gap-4 text-sm" aria-label="ניווט פוסטים">
+      {/* Section 11 — post nav — marginTop: 80px */}
+      {(navigation.prevHref || navigation.nextHref) && (
+        <div className="max-w-[1140px] mx-auto px-4" style={{ marginTop: "80px" }}>
+          <nav className="flex flex-col sm:flex-row justify-between gap-4" aria-label="ניווט פוסטים">
             {navigation.prevHref && (
               <Link
                 href={navigation.prevHref}
-                className="flex items-center gap-2 text-[#7a1f1f] hover:underline"
+                className="hover:underline"
+                style={{ fontFamily: "Rubik, sans-serif", color: "rgb(12,12,12)" }}
               >
-                <span aria-hidden>←</span>
-                <span>
-                  <span className="block text-xs text-[#999]">הקודם</span>
-                  <span className="font-bold">{navigation.prevLabel}</span>
-                </span>
+                <span className="block text-sm" style={{ color: "rgb(51,51,51)" }}>הקודם</span>
+                <span className="text-xl font-medium">{navigation.prevLabel}</span>
               </Link>
             )}
             {navigation.nextHref && (
               <Link
                 href={navigation.nextHref}
-                className="flex items-center gap-2 text-[#7a1f1f] hover:underline sm:text-end"
+                className="hover:underline sm:text-end"
+                style={{ fontFamily: "Rubik, sans-serif", color: "rgb(12,12,12)" }}
               >
-                <span>
-                  <span className="block text-xs text-[#999]">הבא</span>
-                  <span className="font-bold">{navigation.nextLabel}</span>
-                </span>
-                <span aria-hidden>→</span>
+                <span className="block text-sm" style={{ color: "rgb(51,51,51)" }}>הבא</span>
+                <span className="text-xl font-medium">{navigation.nextLabel}</span>
               </Link>
             )}
           </nav>
-        )}
-      </div>
+        </div>
+      )}
     </article>
   );
 }

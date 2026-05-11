@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { RELATED_FALLBACK, type RelatedPost } from "@/lib/content";
 
-/** Section 7 — תוכן קשור (related content). On post pages, breadcrumb is shown at the top. */
 export default function RelatedContent({
   breadcrumb,
   posts,
@@ -11,22 +10,43 @@ export default function RelatedContent({
 }) {
   const list = posts && posts.length > 0 ? posts : RELATED_FALLBACK;
   return (
-    <section className="bg-white py-12 sm:py-14 border-t border-gray-100">
-      <div className="max-w-[1200px] mx-auto px-4">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1c1c] text-center mb-3">
+    <section className="bg-white" style={{ marginTop: "180px" }}>
+      <div className="max-w-[1140px] mx-auto px-4">
+        <h2
+          style={{
+            fontFamily: "Rubik, sans-serif",
+            fontSize: "45px",
+            fontWeight: 400,
+            lineHeight: "45px",
+            color: "rgb(12, 12, 12)",
+            textAlign: "start",
+            margin: 0,
+          }}
+        >
           תוכן קשור
         </h2>
 
         {breadcrumb && (
-          <nav aria-label="breadcrumbs" className="text-center text-sm text-[#666] mb-8">
-            <Link href="/" className="hover:text-[#7a1f1f]">
+          <nav
+            aria-label="breadcrumbs"
+            className="mt-3"
+            style={{
+              fontFamily: "Assistant, sans-serif",
+              fontSize: "16px",
+              fontWeight: 400,
+              lineHeight: "24px",
+              color: "rgb(51, 51, 51)",
+              textAlign: "start",
+            }}
+          >
+            <Link href="/" className="hover:underline">
               {breadcrumb.homeLabel}
             </Link>
             {breadcrumb.categoryLabel && (
               <>
                 <span className="mx-2">»</span>
                 {breadcrumb.categoryHref ? (
-                  <Link href={breadcrumb.categoryHref} className="hover:text-[#7a1f1f]">
+                  <Link href={breadcrumb.categoryHref} className="hover:underline">
                     {breadcrumb.categoryLabel}
                   </Link>
                 ) : (
@@ -35,21 +55,39 @@ export default function RelatedContent({
               </>
             )}
             <span className="mx-2">»</span>
-            <span className="text-[#1c1c1c]">{breadcrumb.current}</span>
+            <span style={{ color: "rgb(12, 12, 12)" }}>{breadcrumb.current}</span>
           </nav>
         )}
 
-        <h3 className="text-lg font-bold text-[#7a1f1f] text-center mb-6">
+        <h2
+          className="mt-6"
+          style={{
+            fontFamily: "Assistant, sans-serif",
+            fontSize: "32px",
+            fontWeight: 600,
+            lineHeight: "38.4px",
+            color: "#000000",
+            textAlign: "start",
+            margin: "8px 0 16px",
+          }}
+        >
           פוסטים
-        </h3>
+        </h2>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-[15px]">
+        <ul
+          className="flex flex-wrap gap-x-4 gap-y-2 list-none p-0 m-0"
+          style={{
+            fontFamily: "Assistant, sans-serif",
+            fontSize: "16px",
+            fontWeight: 400,
+            lineHeight: "21px",
+            color: "#000000",
+            textAlign: "start",
+          }}
+        >
           {list.map((post) => (
-            <li key={post.slug}>
-              <Link
-                href={`/${post.slug}`}
-                className="block py-2 text-[#333] hover:text-[#7a1f1f] hover:underline transition-colors"
-              >
+            <li key={post.slug} className="leading-tight">
+              <Link href={`/${post.slug}`} className="text-black hover:underline">
                 {post.title}
               </Link>
             </li>

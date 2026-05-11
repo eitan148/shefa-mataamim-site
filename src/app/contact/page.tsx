@@ -34,7 +34,7 @@ export default function ContactPage() {
             <div>
               <h2 className="text-2xl font-bold text-[#1c1c1c] mb-2">יצירת קשר מהירה</h2>
               <p className="text-[#555] mb-6">בחרו את הדרך הנוחה לכם:</p>
-              <CTAButtons align="start" />
+              <CTAButtons />
 
               <div className="mt-10 p-6 bg-gray-50 rounded-2xl border border-gray-100 space-y-3 text-sm">
                 <h3 className="text-base font-bold text-[#1c1c1c] mb-2">פרטי קשר</h3>
