@@ -8,6 +8,7 @@ export default function RelatedContent({
   breadcrumb?: { homeLabel: string; categoryLabel?: string; categoryHref?: string; current: string };
   posts?: RelatedPost[];
 }) {
+  // Use live WP REST posts when provided. Fallback is for SSR with WP API unreachable.
   const list = posts && posts.length > 0 ? posts : RELATED_FALLBACK;
   return (
     <section className="bg-white" style={{ marginTop: "180px" }}>

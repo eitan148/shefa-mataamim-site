@@ -12,7 +12,7 @@ export function WhatsAppButton({ shape = "square", width = "auto", className = "
       target="_blank"
       rel="noopener noreferrer"
       aria-label="קבלו הצעת מחיר בווצאפ"
-      className={`inline-flex items-center justify-center gap-2 px-[30px] py-[15px] ${radius} ${w} text-white text-base font-medium leading-none transition-colors ${className}`}
+      className={`inline-flex items-center justify-center gap-2 px-[30px] py-[15px] ${radius} ${w} text-white text-base font-medium leading-none transition-colors hover:brightness-110 active:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 ${className}`}
       style={{ backgroundColor: "rgb(0, 211, 57)", fontFamily: "Rubik, sans-serif", fontWeight: 500, fontSize: "16px", lineHeight: "16px" }}
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -30,7 +30,7 @@ export function PhoneButton({ shape = "square", width = "auto", className = "" }
     <a
       href={CONTACT.phoneTel}
       aria-label={`התקשרו ${CONTACT.phoneDisplay}`}
-      className={`inline-flex items-center justify-center gap-2 px-[30px] py-[15px] ${radius} ${w} text-base font-medium leading-none bg-white transition-colors ${className}`}
+      className={`inline-flex items-center justify-center gap-2 px-[30px] py-[15px] ${radius} ${w} text-base font-medium leading-none bg-white transition-colors hover:bg-gray-100 active:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(64,84,178)] focus-visible:ring-offset-2 ${className}`}
       style={{ fontFamily: "Rubik, sans-serif", fontWeight: 500, fontSize: "16px", lineHeight: "16px", color: "rgb(0, 0, 0)" }}
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">

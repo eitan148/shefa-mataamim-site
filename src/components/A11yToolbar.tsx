@@ -60,7 +60,7 @@ export default function A11yToolbar() {
     >
       <div className="relative">
         <ul className="bg-white border border-gray-200 rounded-tr-lg rounded-br-lg shadow-lg w-[180px] text-sm text-[#1c1c1c] py-2">
-          <li className="px-3 py-2 font-bold text-xs text-[#7a1f1f] border-b border-gray-100">
+          <li className="px-3 py-2 font-bold text-xs border-b border-gray-100" style={{ color: "rgb(64, 84, 178)" }}>
             כלי נגישות
           </li>
           <li><button type="button" onClick={() => set("large")} className="w-full text-start px-3 py-1.5 hover:bg-gray-50">הגדל טקסט</button></li>
@@ -69,7 +69,7 @@ export default function A11yToolbar() {
           <li><button type="button" onClick={() => set("high-contrast")} className="w-full text-start px-3 py-1.5 hover:bg-gray-50">ניגודיות גבוהה</button></li>
           <li><button type="button" onClick={() => set("invert")} className="w-full text-start px-3 py-1.5 hover:bg-gray-50">ניגודיות הפוכה</button></li>
           <li><button type="button" onClick={() => set("highlight-links")} className="w-full text-start px-3 py-1.5 hover:bg-gray-50">הדגשת קישורים</button></li>
-          <li><button type="button" onClick={() => set("normal")} className="w-full text-start px-3 py-1.5 hover:bg-gray-50 text-[#7a1f1f]">איפוס</button></li>
+          <li><button type="button" onClick={() => set("normal")} className="w-full text-start px-3 py-1.5 hover:bg-gray-50" style={{ color: "rgb(64, 84, 178)" }}>איפוס</button></li>
         </ul>
 
         {/* Tab handle */}
@@ -78,7 +78,8 @@ export default function A11yToolbar() {
           aria-label={open ? "סגור סרגל נגישות" : "פתח סרגל נגישות"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="absolute top-0 -right-9 bg-[#7a1f1f] text-white w-9 h-12 rounded-l-none rounded-r-lg shadow-md flex items-center justify-center hover:bg-[#5a1414]"
+          className="absolute top-0 -right-9 w-9 h-12 rounded-l-none rounded-r-lg shadow-md flex items-center justify-center text-white transition-colors"
+          style={{ backgroundColor: "rgb(64, 84, 178)" }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <circle cx="12" cy="6" r="2" fill="currentColor" stroke="none"/>

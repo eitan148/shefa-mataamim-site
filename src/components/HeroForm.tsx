@@ -55,7 +55,7 @@ export default function HeroForm({ variant = "strip" }: { variant?: Variant }) {
         <button
           type="submit"
           disabled={submitting}
-          className={`bg-white text-black px-[30px] py-[15px] ${radius} whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed transition-opacity`}
+          className={`bg-white text-black px-[30px] py-[15px] ${radius} whitespace-nowrap cursor-pointer transition-all hover:bg-gray-100 active:bg-gray-200 disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(64,84,178)]`}
           style={btnFont}
         >
           {submitting ? "שולח..." : "שלחו!"}

@@ -36,11 +36,9 @@ export default function QuickContactBlock() {
         backgroundSize: "auto",
         backgroundPosition: "50% 50%",
         paddingTop: "21px",
-        paddingBottom: "280px",
+        paddingBottom: "60px",
       }}
     >
-      <div className="absolute inset-0 bg-red-700/30 mix-blend-multiply pointer-events-none" aria-hidden="true" />
-
       <div className="relative max-w-[1140px] mx-auto px-4">
         <h4
           className="text-center whitespace-pre-line"
