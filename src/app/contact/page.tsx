@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StickyMobileBar from "@/components/StickyMobileBar";
+import StickyBar from "@/components/StickyBar";
+import A11yToolbar from "@/components/A11yToolbar";
 import HeroForm from "@/components/HeroForm";
 import CTAButtons from "@/components/CTAButtons";
 import { CONTACT, WHATSAPP_URL } from "@/lib/constants";
@@ -16,7 +17,8 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 pb-16 md:pb-0">
+      <A11yToolbar />
+      <main className="flex-1 pt-[78px] pb-[58px]">
         <section className="bg-gradient-to-b from-[#7a1f1f] to-[#5a1414] text-white py-16 sm:py-20">
           <div className="max-w-[1100px] mx-auto px-4 text-center">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">צור קשר</h1>
@@ -32,7 +34,7 @@ export default function ContactPage() {
             <div>
               <h2 className="text-2xl font-bold text-[#1c1c1c] mb-2">יצירת קשר מהירה</h2>
               <p className="text-[#555] mb-6">בחרו את הדרך הנוחה לכם:</p>
-              <CTAButtons variant="stacked" />
+              <CTAButtons align="start" />
 
               <div className="mt-10 p-6 bg-gray-50 rounded-2xl border border-gray-100 space-y-3 text-sm">
                 <h3 className="text-base font-bold text-[#1c1c1c] mb-2">פרטי קשר</h3>
@@ -69,7 +71,7 @@ export default function ContactPage() {
         </section>
       </main>
       <Footer />
-      <StickyMobileBar />
+      <StickyBar />
     </>
   );
 }

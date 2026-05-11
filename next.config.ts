@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 30,
+    remotePatterns: [
+      { protocol: "https", hostname: "www.wigig.co.il" },
+      { protocol: "https", hostname: "wigig.co.il" },
+    ],
   },
   async redirects() {
     return [

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StickyMobileBar from "@/components/StickyMobileBar";
+import StickyBar from "@/components/StickyBar";
+import A11yToolbar from "@/components/A11yToolbar";
 
 export const metadata: Metadata = {
   title: "הצהרת נגישות",
@@ -13,7 +14,8 @@ export default function AccessibilityPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 pb-16 md:pb-0 py-12 sm:py-16 bg-white">
+      <A11yToolbar />
+      <main className="flex-1 pt-[78px] pb-[58px] py-12 sm:py-16 bg-white">
         <article className="max-w-3xl mx-auto px-4 text-[#333] leading-relaxed">
           <h1 className="text-4xl font-extrabold text-[#1c1c1c] mb-6">הצהרת נגישות</h1>
 
@@ -57,7 +59,7 @@ export default function AccessibilityPage() {
         </article>
       </main>
       <Footer />
-      <StickyMobileBar />
+      <StickyBar />
     </>
   );
 }

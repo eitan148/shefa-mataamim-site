@@ -1,19 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CONTACT, SITE } from "@/lib/constants";
-
-const NAV_ITEMS = [
-  { label: "ההתמחות שלנו", href: "/#packages" },
-  { label: "התפריט", href: "/#menu" },
-  { label: "אזורי שירות", href: "/#service-areas" },
-  { label: "צור קשר", href: "/contact" },
-];
+import { NAV_LINKS } from "@/lib/content";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm">
-      <div className="max-w-[1180px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
-        {/* Logo */}
+    <header className="fixed top-0 inset-x-0 z-50 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] h-[78px]">
+      <div className="max-w-[1200px] h-full mx-auto px-4 flex items-center justify-between gap-4">
+        {/* Logo on the right (RTL) */}
         <Link href="/" className="flex items-center gap-2 shrink-0" aria-label={SITE.name}>
           <Image
             src="/shefa-logo.png"
@@ -21,13 +15,13 @@ export default function Header() {
             width={120}
             height={104}
             priority
-            className="h-12 w-auto md:h-14"
+            className="h-14 w-auto"
           />
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-[#1c1c1c]" aria-label="ניווט ראשי">
-          {NAV_ITEMS.map((item) => (
+          {NAV_LINKS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -38,10 +32,10 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Phone CTA */}
+        {/* Phone CTA cyan on the left (RTL) */}
         <a
           href={CONTACT.phoneTel}
-          className="btn-phone hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm shadow-sm transition-colors"
+          className="btn-phone hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-sm shadow-md"
           aria-label={`התקשרו ${CONTACT.phoneDisplay}`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
@@ -50,7 +44,7 @@ export default function Header() {
           {CONTACT.phoneDisplay}
         </a>
 
-        {/* Mobile menu trigger */}
+        {/* Mobile menu */}
         <details className="md:hidden relative">
           <summary
             aria-label="פתח תפריט"
@@ -64,7 +58,7 @@ export default function Header() {
             className="absolute left-0 mt-2 w-56 bg-white border border-gray-100 rounded-md shadow-lg py-2"
             aria-label="ניווט נייד"
           >
-            {NAV_ITEMS.map((item) => (
+            {NAV_LINKS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

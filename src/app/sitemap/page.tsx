@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StickyMobileBar from "@/components/StickyMobileBar";
+import StickyBar from "@/components/StickyBar";
+import A11yToolbar from "@/components/A11yToolbar";
 
 export const metadata: Metadata = {
   title: "מפת אתר",
@@ -42,7 +43,8 @@ export default function SitemapPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 pb-16 md:pb-0">
+      <A11yToolbar />
+      <main className="flex-1 pt-[78px] pb-[58px]">
         <section className="py-12 sm:py-16 bg-white">
           <div className="max-w-3xl mx-auto px-4">
             <h1 className="text-4xl font-extrabold text-[#1c1c1c] mb-3">מפת אתר</h1>
@@ -73,7 +75,7 @@ export default function SitemapPage() {
         </section>
       </main>
       <Footer />
-      <StickyMobileBar />
+      <StickyBar />
     </>
   );
 }

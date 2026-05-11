@@ -16,6 +16,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Offset for fixed 78px header so anchor jumps land below it */
+  scroll-padding-top: 90px;
 }
 
 body {
@@ -36,21 +38,57 @@ h1, h2, h3, h4, h5, h6 {
   color: #1c1c1c;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
+input, textarea, button, select { font-family: inherit; }
 
-input, textarea, button, select {
-  font-family: inherit;
-}
-
+/* Brand buttons */
 .btn-wa { background-color: #00d339; color: #ffffff; }
 .btn-wa:hover { background-color: #04a82e; }
 .btn-phone { background-color: #00ddff; color: #1c1c1c; }
-.btn-phone:hover { background-color: #06b5d4; }
+.btn-phone:hover { background-color: #06b5d4; color: #ffffff; }
 .btn-phone-dark { background-color: #1c1c1c; color: #ffffff; }
 .btn-phone-dark:hover { background-color: #333; }
+
+/* Post body styling (Sections 9-11) for the WP REST HTML */
+.prose-wigig h2 {
+  font-size: 1.5rem;
+  margin: 2.5rem 0 1rem;
+  color: #1c1c1c;
+}
+.prose-wigig h3 {
+  font-size: 1.2rem;
+  margin: 2rem 0 0.8rem;
+  color: #1c1c1c;
+}
+.prose-wigig p {
+  margin: 1rem 0;
+  line-height: 1.85;
+}
+.prose-wigig ul, .prose-wigig ol {
+  margin: 1rem 0;
+  padding-inline-start: 1.5rem;
+  line-height: 1.85;
+}
+.prose-wigig ul { list-style: disc; }
+.prose-wigig ol { list-style: decimal; }
+.prose-wigig a { color: #7a1f1f; text-decoration: underline; }
+.prose-wigig strong { font-weight: 700; color: #1c1c1c; }
+.prose-wigig img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem auto;
+  display: block;
+}
+
+/* A11y toolbar modes */
+.a11y-large { font-size: 118%; }
+.a11y-small { font-size: 88%; }
+.a11y-grayscale { filter: grayscale(1); }
+.a11y-hc { filter: contrast(1.4); }
+.a11y-invert { filter: invert(1) hue-rotate(180deg); }
+.a11y-invert img, .a11y-invert video { filter: invert(1) hue-rotate(180deg); }
+.a11y-hl a { text-decoration: underline !important; outline: 2px solid #ffd54f; outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

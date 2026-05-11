@@ -3,34 +3,44 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function HeroForm({ compact = false }: { compact?: boolean }) {
+type Variant = "strip" | "card" | "light";
+
+export default function HeroForm({ variant = "card" }: { variant?: Variant }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!phone.trim()) return;
-    setIsSubmitting(true);
+    setSubmitting(true);
     try {
       await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, source: "hero" }),
+        body: JSON.stringify({ name, phone, source: variant }),
       });
     } catch {
-      /* swallow – redirect anyway, server logs the failure */
+      /* server logs */
     }
     router.push("/thank-you");
   }
 
+  const inputClass =
+    variant === "light"
+      ? "flex-1 min-w-0 px-4 py-3 rounded-md border border-white/40 bg-white/10 text-white placeholder-white/70 focus:bg-white focus:text-[#1c1c1c] focus:outline-none focus:ring-2 focus:ring-white"
+      : "flex-1 min-w-0 px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7a1f1f] text-base text-[#1c1c1c]";
+
+  const wrapperClass =
+    variant === "strip"
+      ? "w-full"
+      : variant === "light"
+      ? "w-full max-w-2xl mx-auto"
+      : "bg-white rounded-2xl shadow-lg p-5 sm:p-6 w-full max-w-2xl mx-auto";
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={`${compact ? "" : "bg-white rounded-xl shadow-lg p-5 sm:p-6"} w-full max-w-xl mx-auto`}
-      aria-label="טופס יצירת קשר מהיר"
-    >
+    <form onSubmit={handleSubmit} className={wrapperClass} aria-label="טופס יצירת קשר מהיר">
       <div className="flex flex-col sm:flex-row gap-3">
         <input
           type="text"
@@ -39,7 +49,7 @@ export default function HeroForm({ compact = false }: { compact?: boolean }) {
           onChange={(e) => setName(e.target.value)}
           placeholder="שם"
           aria-label="שם"
-          className="flex-1 min-w-0 px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7a1f1f] text-base text-[#1c1c1c]"
+          className={inputClass}
         />
         <input
           type="tel"
@@ -49,16 +59,15 @@ export default function HeroForm({ compact = false }: { compact?: boolean }) {
           placeholder="טלפון"
           required
           inputMode="tel"
-          pattern="[0-9\\-\\+\\s\\(\\)]+"
           aria-label="טלפון"
-          className="flex-1 min-w-0 px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7a1f1f] text-base text-[#1c1c1c]"
+          className={inputClass}
         />
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="btn-wa px-6 py-3 rounded-md font-bold text-base shadow-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
+          disabled={submitting}
+          className="btn-wa px-7 py-3 rounded-md font-bold text-base shadow-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
         >
-          {isSubmitting ? "שולח..." : "שלחו!"}
+          {submitting ? "שולח..." : "שלחו!"}
         </button>
       </div>
     </form>

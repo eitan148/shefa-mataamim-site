@@ -1,75 +1,87 @@
-import { PACKAGES } from "@/lib/content";
+import { PACKAGES, type Package } from "@/lib/content";
 import CTAButtons from "./CTAButtons";
 
+function PackageCard({ pkg }: { pkg: Package }) {
+  // Split heading like "₪48 - בסיסי" into price + name
+  const [pricePart, ...rest] = pkg.h2.split(" - ");
+  const name = rest.join(" - ");
+
+  return (
+    <article className="flex flex-col rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-shadow overflow-hidden">
+      <header className="px-6 pt-6 pb-4 text-center border-b border-gray-100">
+        <h2 className="text-4xl font-extrabold text-[#1c1c1c] leading-tight">
+          {pricePart}
+        </h2>
+        <div className="mt-1 text-lg font-bold text-[#7a1f1f]">{name}</div>
+        <div className="mt-1 text-sm text-[#666]">{pkg.subtitle}</div>
+      </header>
+
+      <div className="flex-1 px-6 py-5 text-[15px] text-[#333] leading-relaxed">
+        {pkg.preamble && (
+          <p className="font-bold text-[#1c1c1c] mb-3">{pkg.preamble}</p>
+        )}
+
+        {pkg.items && (
+          <ul className="space-y-2">
+            {pkg.items.map((item, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00d339" strokeWidth="3" className="mt-1.5 shrink-0" aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {pkg.blocks && (
+          <div className="space-y-4">
+            {pkg.blocks.map((block, i) => (
+              <div key={i}>
+                {block.heading && (
+                  <p className="font-bold text-[#1c1c1c] mb-1">{block.heading}</p>
+                )}
+                {block.lines.map((line, j) => (
+                  <p key={j} className="text-[#333]">{line}</p>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <footer className="px-5 pb-5 flex flex-col gap-2">
+        <a
+          href="https://wa.me/972546272421?text=%D7%94%D7%99%D7%99%20%D7%A4%D7%A0%D7%99%D7%AA%D7%99%20%D7%9C%D7%A7%D7%99%D7%99%D7%98%D7%A8%D7%99%D7%A0%D7%92%20%D7%A9%D7%A4%D7%A2%20%D7%9E%D7%98%D7%A2%D7%9E%D7%99%D7%9D"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-wa text-center py-2.5 rounded-full text-sm font-bold shadow-sm"
+        >
+          קבלו הצעת מחיר בווצאפ
+        </a>
+        <a
+          href="tel:0723308072"
+          className="btn-phone-dark text-center py-2.5 rounded-full text-sm font-bold shadow-sm"
+        >
+          התקשרו: 072-3308-072
+        </a>
+      </footer>
+    </article>
+  );
+}
+
+/** Section 3 — 8 packages */
 export default function PackagesGrid() {
   return (
-    <section
-      id="packages"
-      className="relative bg-gradient-to-b from-gray-50 to-white py-16 sm:py-20"
-    >
-      <div className="max-w-[1180px] mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1c1c1c] mb-3">
-            ההתמחות שלנו
-          </h2>
-          <p className="text-base sm:text-lg text-[#555] max-w-2xl mx-auto">
-            8 חבילות לכל סוג אירוע – אזכרות, אירוסין, חתונות, בר/בת מצווה, שבת קודש ועוד.
-            <br />כל החבילות כוללות אוכל מוכן בכשרות בד&quot;ץ הרב מחפוד.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <section id="packages" className="bg-gray-50 py-16 sm:py-20">
+      <div className="max-w-[1200px] mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {PACKAGES.map((pkg) => (
-            <article
-              key={pkg.name}
-              className={`relative flex flex-col rounded-2xl border-2 p-6 shadow-sm hover:shadow-lg transition-shadow ${
-                pkg.highlight
-                  ? "border-[#7a1f1f] bg-white ring-2 ring-[#7a1f1f]/10"
-                  : "border-gray-200 bg-white"
-              }`}
-            >
-              {pkg.highlight && (
-                <span className="absolute -top-3 right-4 px-3 py-1 bg-[#7a1f1f] text-white text-xs font-bold rounded-full shadow-md">
-                  הכי מבוקש
-                </span>
-              )}
-              <div className="text-center pb-4 border-b border-gray-100">
-                <div className="text-4xl font-extrabold text-[#1c1c1c] mb-1">
-                  ₪{pkg.price}
-                  {pkg.priceSuffix && (
-                    <span className="text-base text-[#666] font-medium"> {pkg.priceSuffix}</span>
-                  )}
-                </div>
-                <h3 className="text-lg font-bold text-[#7a1f1f]">{pkg.name}</h3>
-                <p className="text-xs text-[#666] mt-1">{pkg.subtitle}</p>
-              </div>
-              <ul className="mt-4 space-y-2 flex-1">
-                {pkg.items.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-2 text-sm text-[#333] leading-relaxed"
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="#00d339"
-                      strokeWidth="3"
-                      className="mt-1 shrink-0"
-                      aria-hidden="true"
-                    >
-                      <path d="M20 6 9 17l-5-5" />
-                    </svg>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
+            <PackageCard key={pkg.h2} pkg={pkg} />
           ))}
         </div>
 
-        <div className="mt-12">
+        <div className="mt-12 flex justify-center">
           <CTAButtons />
         </div>
       </div>

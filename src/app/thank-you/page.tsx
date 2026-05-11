@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StickyMobileBar from "@/components/StickyMobileBar";
+import StickyBar from "@/components/StickyBar";
+import A11yToolbar from "@/components/A11yToolbar";
 import CTAButtons from "@/components/CTAButtons";
 
 export const metadata: Metadata = {
@@ -16,7 +17,8 @@ export default function ThankYouPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 pb-16 md:pb-0 flex items-center justify-center bg-gradient-to-b from-white to-gray-50 min-h-[60vh]">
+      <A11yToolbar />
+      <main className="flex-1 pt-[78px] pb-[58px] flex items-center justify-center bg-gradient-to-b from-white to-gray-50 min-h-[60vh]">
         <div className="max-w-xl mx-auto px-4 py-16 sm:py-24 text-center">
           <div className="mx-auto w-20 h-20 bg-[#00d339] rounded-full flex items-center justify-center mb-6 shadow-lg">
             <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" aria-hidden="true">
@@ -43,7 +45,7 @@ export default function ThankYouPage() {
         </div>
       </main>
       <Footer />
-      <StickyMobileBar />
+      <StickyBar />
     </>
   );
 }

@@ -23,26 +23,18 @@ export const viewport: Viewport = {
   themeColor: "#7a1f1f",
 };
 
+const HOMEPAGE_TITLE = 'קייטרינג כשר למהדרין בד"ץ הרב מחפוד החל מ48 ש"ח למנה: שפע';
+const HOMEPAGE_DESC =
+  'קייטרינג כשר למהדרין (בדץ יורה דעה: הרב מחפוד) לא צריך להיות עם איכות אוכל ירודה. אנחנו מעניקים חווית מזון כשרה למהדרין אך טעימה וערבה לחך עם אפשרויות הסעדה ברמות שונות החל מאזכרות וכלה בסעודות פאר לחתונות.';
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.alternateName} החל מ-48 ש"ח למנה | ${SITE.name}`,
+    default: HOMEPAGE_TITLE,
     template: `%s | ${SITE.name}`,
   },
-  description: SITE.description,
+  description: HOMEPAGE_DESC,
   applicationName: SITE.name,
-  keywords: [
-    "קייטרינג כשר",
-    "קייטרינג למהדרין",
-    'קייטרינג בד"ץ הרב מחפוד',
-    "קייטרינג פתח תקווה",
-    "קייטרינג לאירועים",
-    "קייטרינג לחתונה",
-    "קייטרינג לבר מצווה",
-    "קייטרינג לאזכרה",
-    "אוכל מוכן",
-    "שפע מטעמים",
-  ],
   authors: [{ name: SITE.name }],
   creator: SITE.name,
   publisher: SITE.name,
@@ -52,21 +44,14 @@ export const metadata: Metadata = {
     locale: SITE.locale,
     url: SITE.url,
     siteName: SITE.name,
-    title: `${SITE.alternateName} החל מ-48 ש"ח למנה | ${SITE.name}`,
-    description: SITE.description,
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 900,
-        height: 1200,
-        alt: 'קייטרינג כשר למהדרין בד"ץ הרב מחפוד',
-      },
-    ],
+    title: HOMEPAGE_TITLE,
+    description: HOMEPAGE_DESC,
+    images: [{ url: "/og-image.jpg", width: 900, height: 1200, alt: 'קייטרינג כשר למהדרין בד"ץ הרב מחפוד' }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.alternateName} | ${SITE.name}`,
-    description: SITE.description,
+    title: HOMEPAGE_TITLE,
+    description: HOMEPAGE_DESC,
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -87,9 +72,7 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
-  verification: {
-    google: "AtTqy_TLUh0D3v1iy-48Veboz0p7iBdK_0ozntGH0p4",
-  },
+  verification: { google: "AtTqy_TLUh0D3v1iy-48Veboz0p7iBdK_0ozntGH0p4" },
 };
 
 const jsonLd = {
@@ -115,24 +98,10 @@ const jsonLd = {
       telephone: "0723308072",
       priceRange: "₪-₪₪₪₪₪",
       servesCuisine: "Kosher Mehadrin",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "פתח תקווה",
-        addressCountry: "IL",
-      },
+      address: { "@type": "PostalAddress", addressLocality: "פתח תקווה", addressCountry: "IL" },
       openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-          opens: "00:00",
-          closes: "23:49",
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: "Friday",
-          opens: "00:00",
-          closes: "11:00",
-        },
+        { "@type": "OpeningHoursSpecification", dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], opens: "00:00", closes: "23:49" },
+        { "@type": "OpeningHoursSpecification", dayOfWeek: "Friday", opens: "00:00", closes: "11:00" },
       ],
       foundingDate: "2013",
     },
@@ -148,20 +117,11 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="he"
-      dir="rtl"
-      className={`${assistant.variable} ${rubik.variable}`}
-    >
+    <html lang="he" dir="rtl" className={`${assistant.variable} ${rubik.variable}`}>
       <body className="min-h-screen flex flex-col bg-white text-[#333]">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         {children}
       </body>
     </html>
