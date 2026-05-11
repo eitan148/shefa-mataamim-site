@@ -13,53 +13,66 @@ import PostBody from "@/components/PostBody";
 import Footer from "@/components/Footer";
 import StickyBar from "@/components/StickyBar";
 import A11yToolbar from "@/components/A11yToolbar";
-import { getPostBySlug, getRecentPostSlugs, getAdjacentPosts } from "@/lib/wp";
+import {
+  getPageBySlug,
+  listAllPosts,
+  getAdjacent,
+  decodeEntities,
+  type ContentRecord,
+} from "@/lib/content-store";
 
 export const revalidate = 600;
 
-const STATIC_ROUTES = new Set([
-  "contact",
-  "thank-you",
-  "sitemap",
-  "terms",
-  "accessibility",
-  "blog",
-  "api",
-]);
+const RESERVED = new Set(["api", "_next", "static", "blog", "favicon.ico", "robots.txt", "sitemap.xml"]);
 
 type Params = { slug: string };
 
+function resolve(slug: string): ContentRecord | null {
+  if (RESERVED.has(slug)) return null;
+  return getPageBySlug(slug);
+}
+
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  if (STATIC_ROUTES.has(slug)) return {};
-  const post = await getPostBySlug(slug);
-  if (!post) return {};
-  const title = stripHtml(post.title.rendered);
+  const rec = resolve(slug);
+  if (!rec) return {};
+  const title = decodeEntities(rec.title);
+  // Strip HTML for description
+  const plain = (rec.content || rec.excerpt || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   return {
     title,
-    description: post.yoast_head_json?.description || stripHtml(post.excerpt.rendered).slice(0, 160),
-    alternates: { canonical: `/${slug}` },
+    description: plain.slice(0, 160),
+    alternates: { canonical: rec.route || `/${slug}` },
     openGraph: {
       title,
-      description: post.yoast_head_json?.description,
-      images: post.yoast_head_json?.og_image?.[0]?.url ? [post.yoast_head_json.og_image[0].url] : undefined,
+      description: plain.slice(0, 160),
+      images: rec.image_url ? [rec.image_url] : undefined,
     },
   };
 }
 
-export default async function PostPage({ params }: { params: Promise<Params> }) {
+export default async function CatchAllPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  if (STATIC_ROUTES.has(slug)) notFound();
+  const rec = resolve(slug);
+  if (!rec) notFound();
 
-  const post = await getPostBySlug(slug);
-  if (!post) notFound();
+  const title = decodeEntities(rec.title);
+  const all = listAllPosts();
+  const related = all
+    .filter((p) => p.slug !== rec.slug)
+    .slice(0, 30)
+    .map((p) => ({ slug: p.slug, title: decodeEntities(p.title) }));
 
-  const [related, adjacent] = await Promise.all([
-    getRecentPostSlugs(40),
-    getAdjacentPosts(slug),
-  ]);
-
-  const postTitle = stripHtml(post.title.rendered);
+  let nav: { prevLabel?: string; prevHref?: string; nextLabel?: string; nextHref?: string } | undefined;
+  if (rec.type === "post") {
+    const adj = getAdjacent(rec.slug);
+    nav = {
+      prevLabel: adj.prev ? decodeEntities(adj.prev.title) : undefined,
+      prevHref: adj.prev ? `/${adj.prev.slug}` : undefined,
+      nextLabel: adj.next ? decodeEntities(adj.next.title) : undefined,
+      nextHref: adj.next ? `/${adj.next.slug}` : undefined,
+    };
+  }
 
   return (
     <>
@@ -67,7 +80,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
       <A11yToolbar />
 
       <main className="flex-1 pt-[78px] pb-[58px]">
-        <Hero pageTitle={postTitle} />
+        <Hero pageTitle={title} />
         <QuickContactStrip />
         <About />
         <PackagesGrid />
@@ -75,33 +88,14 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
         <Gallery />
         <QuickContactBlock />
         <RelatedContent
-          posts={related.filter((p) => p.slug !== slug).slice(0, 30)}
-          breadcrumb={{ homeLabel: "דף הבית", current: postTitle }}
+          posts={related}
+          breadcrumb={{ homeLabel: "דף הבית", current: title }}
         />
-        <PostBody
-          title={postTitle}
-          contentHtml={post.content.rendered}
-          nav={{
-            prevLabel: adjacent.prev?.title,
-            prevHref: adjacent.prev ? `/${adjacent.prev.slug}` : undefined,
-            nextLabel: adjacent.next?.title,
-            nextHref: adjacent.next ? `/${adjacent.next.slug}` : undefined,
-          }}
-        />
+        <PostBody title={title} contentHtml={rec.content || ""} nav={nav} />
       </main>
 
       <Footer />
       <StickyBar />
     </>
   );
-}
-
-function stripHtml(s: string) {
-  return s
-    .replace(/<[^>]*>/g, "")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#039;/g, "'")
-    .replace(/&nbsp;/g, " ")
-    .trim();
 }

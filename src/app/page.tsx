@@ -11,30 +11,34 @@ import PostBody from "@/components/PostBody";
 import Footer from "@/components/Footer";
 import StickyBar from "@/components/StickyBar";
 import A11yToolbar from "@/components/A11yToolbar";
-import { getRecentPostSlugs } from "@/lib/wp";
+import { getHome, listAllPosts, decodeEntities } from "@/lib/content-store";
 
-export const revalidate = 600; // 10 min ISR
+export const revalidate = 600;
 
 export default async function Home() {
-  // Try WP REST for real post titles; fall back to the static list inside RelatedContent.
-  const posts = await getRecentPostSlugs(60);
+  const home = getHome();
+  const allPosts = listAllPosts();
+  const related = allPosts.slice(0, 30).map((p) => ({ slug: p.slug, title: decodeEntities(p.title) }));
+
+  // Defensive fallback: if home record missing, render with sensible defaults.
+  const pageTitle = home ? decodeEntities(home.title) : 'קייטרינג כשר למהדרין בד"ץ הרב מחפוד';
+  const bodyHtml = home?.content || "";
 
   return (
     <>
       <Header />
       <A11yToolbar />
 
-      {/* Top padding for fixed 78px header; bottom padding for 46px sticky bar */}
       <main className="flex-1 pt-[78px] pb-[58px]">
-        <Hero />
+        <Hero pageTitle={pageTitle} />
         <QuickContactStrip />
         <About />
         <PackagesGrid />
         <MenuTable />
         <Gallery />
         <QuickContactBlock />
-        <RelatedContent posts={posts.slice(0, 30)} />
-        <PostBody />
+        <RelatedContent posts={related} />
+        <PostBody title={pageTitle} contentHtml={bodyHtml} />
       </main>
 
       <Footer />
