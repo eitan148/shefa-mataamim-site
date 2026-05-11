@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #ffffff;
+  --color-fg: #1c1c1c;
+  --color-body: #333333;
+  --color-wa: #00d339;
+  --color-wa-dark: #04a82e;
+  --color-phone: #00ddff;
+  --color-phone-dark: #06b5d4;
+  --color-kashrut: #7a1f1f;
+  --color-gold: #c4a04a;
+  --font-display: var(--font-assistant);
+  --font-body: var(--font-rubik);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: #333333;
+  font-family: var(--font-rubik), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-assistant), system-ui, sans-serif;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #1c1c1c;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input, textarea, button, select {
+  font-family: inherit;
+}
+
+.btn-wa { background-color: #00d339; color: #ffffff; }
+.btn-wa:hover { background-color: #04a82e; }
+.btn-phone { background-color: #00ddff; color: #1c1c1c; }
+.btn-phone:hover { background-color: #06b5d4; }
+.btn-phone-dark { background-color: #1c1c1c; color: #ffffff; }
+.btn-phone-dark:hover { background-color: #333; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
